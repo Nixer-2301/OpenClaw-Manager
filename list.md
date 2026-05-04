@@ -6,7 +6,7 @@
 
 ## 功能改进
 
-- [ ] 高DPI支持 - 已添加 `AA_EnableHighDpiScaling` 和 `QT_ENABLE_HIGHDPI_SCALING` 环境变量
+- [x] 高DPI支持 - 已添加 `AA_EnableHighDpiScaling` 和 `QT_ENABLE_HIGHDPI_SCALING` 环境变量
 
 ## 待测试
 
