@@ -1,0 +1,29 @@
+{
+  "name": "OpenAI",
+  "description": "OpenAI API configuration template",
+  "version": "1.0",
+  "provider": "openai",
+  "provider_config": {
+    "baseUrl": "https://api.openai.com/v1",
+    "apiKey": "",
+    "api": "openai-completions",
+    "models": [
+      {
+        "id": "gpt-4o",
+        "name": "GPT-4o",
+        "reasoning": false,
+        "input": ["text", "image"],
+        "contextWindow": 128000,
+        "maxTokens": 16384
+      },
+      {
+        "id": "gpt-4o-mini",
+        "name": "GPT-4o Mini",
+        "reasoning": false,
+        "input": ["text", "image"],
+        "contextWindow": 128000,
+        "maxTokens": 16384
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Xiaomi Mimo",
+  "description": "Xiaomi Mimo API configuration template",
+  "version": "1.0",
+  "provider": "xiaomimimo",
+  "provider_config": {
+    "baseUrl": "https://token-plan-cn.xiaomimimo.com/v1",
+    "apiKey": "",
+    "api": "openai-completions",
+    "models": [
+      {
+        "id": "mimo-v2.5",
+        "name": "mimo-v2.5",
+        "reasoning": true,
+        "input": ["text", "image"],
+        "contextWindow": 1048576,
+        "maxTokens": 65535
+      },
+      {
+        "id": "mimo-v2.5-pro",
+        "name": "mimo-v2.5-pro",
+        "reasoning": true,
+        "input": ["text"],
+        "contextWindow": 1048576,
+        "maxTokens": 65535
+      }
+    ]
+  }
+}
