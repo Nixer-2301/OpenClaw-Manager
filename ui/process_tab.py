@@ -135,7 +135,8 @@ class ProcessTab(QWidget):
         self.auth_label.setText(config.get('auth_mode', '-'))
         self.mode_label.setText(config.get('mode', '-'))
 
-        self.status_bar.setText(f'状态已更新: {status.get("running", False)}')
+        port_status = '监听中' if running else '未监听'
+        self.status_bar.setText(f'状态已更新: {status.get("running", False)} | 端口 {config.get("port", "-")}: {port_status}')
 
     def _refreshLogs(self):
         logs = self.process_manager.get_logs(200)

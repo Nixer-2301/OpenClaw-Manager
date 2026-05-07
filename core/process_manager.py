@@ -2,9 +2,13 @@ import subprocess
 import json
 import os
 import signal
+import re
 from pathlib import Path
 from datetime import datetime
 from config import OPENCLAW_DIR
+
+OPENCLAW_CMD_PATH = Path.home() / 'AppData' / 'Roaming' / 'npm' / 'openclaw.cmd'
+OPENCLAW_PORT = 18789
 
 
 class ProcessManager:
@@ -15,6 +19,8 @@ class ProcessManager:
         self.config_file = OPENCLAW_DIR / 'openclaw.json'
 
     def _get_openclaw_command(self):
+        if OPENCLAW_CMD_PATH.exists():
+            return str(OPENCLAW_CMD_PATH)
         try:
             result = subprocess.run(
                 ['where', 'openclaw'],
@@ -27,6 +33,35 @@ class ProcessManager:
         except:
             pass
         return 'openclaw'
+
+    def _scan_running_processes(self):
+        try:
+            result = subprocess.run(
+                ['netstat', '-ano'],
+                capture_output=True,
+                text=True,
+                shell=True
+            )
+            if result.returncode == 0:
+                for line in result.stdout.split('\n'):
+                    if f':{OPENCLAW_PORT}' in line and 'LISTENING' in line:
+                        parts = line.split()
+                        if len(parts) >= 5:
+                            pid = int(parts[-1])
+                            try:
+                                proc_result = subprocess.run(
+                                    ['tasklist', '/FI', f'PID eq {pid}', '/FO', 'CSV'],
+                                    capture_output=True,
+                                    text=True,
+                                    shell=True
+                                )
+                                if proc_result.returncode == 0 and 'node' in proc_result.stdout.lower():
+                                    return pid
+                            except:
+                                pass
+        except:
+            pass
+        return None
 
     def start(self):
         if self.is_running():
@@ -102,6 +137,12 @@ class ProcessManager:
                 self.start_time = None
                 return False
 
+        external_pid = self._scan_running_processes()
+        if external_pid:
+            self.pid = external_pid
+            self.start_time = None
+            return True
+
         return False
 
     def get_status(self):
@@ -142,14 +183,92 @@ class ProcessManager:
 
     def get_logs(self, lines=100):
         log_dir = OPENCLAW_DIR / 'logs'
-        log_files = sorted(log_dir.glob('*.log'), reverse=True) if log_dir.exists() else []
+        if not log_dir.exists():
+            return []
+
+        log_files = []
+        log_files.extend(sorted(log_dir.glob('*.log'), reverse=True))
+        log_files.extend(sorted(log_dir.glob('*.jsonl'), reverse=True))
+        log_files.extend(sorted(log_dir.glob('*.json'), reverse=True))
 
         if not log_files:
             return []
 
+        all_entries = []
+        for log_file in log_files[:3]:
+            try:
+                entries = self._parse_log_file(log_file)
+                all_entries.extend(entries)
+            except:
+                continue
+
+        all_entries.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+        return all_entries[-lines:]
+
+    def _parse_log_file(self, file_path):
+        entries = []
+        suffix = file_path.suffix.lower()
+
         try:
-            with open(log_files[0], 'r', encoding='utf-8', errors='ignore') as f:
-                all_lines = f.readlines()
-                return all_lines[-lines:]
+            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                if suffix == '.json':
+                    content = f.read()
+                    try:
+                        data = json.loads(content)
+                        entries.append({
+                            'timestamp': datetime.now().isoformat(),
+                            'level': 'INFO',
+                            'message': f'[{file_path.name}] {json.dumps(data, ensure_ascii=False)[:200]}...'
+                        })
+                    except:
+                        pass
+                else:
+                    for line in f:
+                        line = line.strip()
+                        if not line:
+                            continue
+
+                        if suffix == '.jsonl':
+                            try:
+                                entry = json.loads(line)
+                                timestamp = entry.get('timestamp', entry.get('ts', ''))
+                                level = 'INFO'
+                                if 'error' in line.lower():
+                                    level = 'ERROR'
+                                elif 'warn' in line.lower():
+                                    level = 'WARN'
+
+                                message = entry.get('action', entry.get('event', entry.get('message', '')))
+                                if not message:
+                                    message = json.dumps(entry, ensure_ascii=False)[:200]
+
+                                entries.append({
+                                    'timestamp': timestamp,
+                                    'level': level,
+                                    'message': f'[{file_path.name}] {message}'
+                                })
+                            except:
+                                entries.append({
+                                    'timestamp': '',
+                                    'level': 'INFO',
+                                    'message': f'[{file_path.name}] {line[:200]}'
+                                })
+                        else:
+                            timestamp_match = re.match(r'\[(.*?)\]', line)
+                            timestamp = timestamp_match.group(1) if timestamp_match else ''
+
+                            level = 'INFO'
+                            if 'error' in line.lower():
+                                level = 'ERROR'
+                            elif 'warn' in line.lower():
+                                level = 'WARN'
+
+                            entries.append({
+                                'timestamp': timestamp,
+                                'level': level,
+                                'message': f'[{file_path.name}] {line}'
+                            })
         except:
-            return []
+            pass
+
+        return entries
