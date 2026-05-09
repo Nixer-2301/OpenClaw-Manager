@@ -1,0 +1,34 @@
+{
+  "app": {
+    "name": "OpenClaw Manager",
+    "version": "版本"
+  },
+  "nav": {
+    "dashboard": "仪表盘",
+    "skills": "Skills管理",
+    "models": "模型管理",
+    "plugins": "插件管理",
+    "process": "进程管理",
+    "sessions": "会话监控",
+    "logs": "日志查看",
+    "stats": "数据统计",
+    "config": "配置文件",
+    "settings": "设置"
+  },
+  "common": {
+    "loading": "加载中...",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "refresh": "刷新",
+    "search": "搜索",
+    "export": "导出",
+    "import": "导入",
+    "confirm": "确认",
+    "success": "成功",
+    "error": "错误",
+    "warning": "警告"
+  }
+}

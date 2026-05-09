@@ -1,0 +1,34 @@
+{
+  "app": {
+    "name": "OpenClaw Manager",
+    "version": "Version"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "skills": "Skills",
+    "models": "Models",
+    "plugins": "Plugins",
+    "process": "Process",
+    "sessions": "Sessions",
+    "logs": "Logs",
+    "stats": "Statistics",
+    "config": "Config",
+    "settings": "Settings"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "refresh": "Refresh",
+    "search": "Search",
+    "export": "Export",
+    "import": "Import",
+    "confirm": "Confirm",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning"
+  }
+}
