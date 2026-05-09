@@ -1,7 +1,20 @@
 # OpenClaw Manager
 
-OpenClaw 管理器的 Tauri/Vue 3 重构版本。
+### 一款用于管理OpenClaw的GUI管理器, 可用于代替OpenClaw原版的WebUI界面, 支持中英语言. 
 
+开发环境
+
+[![Node.JS 20+](https://img.shields.io/badge/Node.JS-20+-green)](https://nodejs.org/)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-green?logo=python&logoColor=white)](http://www.python.org)
+
+辅助AI模型及工具
+
+[![Xiaomi MiMo V2.5 Pro](https://img.shields.io/badge/Xiaomi%20MiMo-V2.5%20Pro-blue?logo=xiaomi&logoColor=white)](https://mimo.mi.com/)
+<a href="https://www.deepseek.com/" target="_blank">
+    <img alt="DeepSeek" src="https://github.com/deepseek-ai/DeepSeek-OCR-2/blob/main/assets/badge.svg?raw=true" />
+<a href="https://opencode.ai" target="_blank">
+
+[![OpenClaw Manager](https://img.shields.io/badge/OpenCode-HomePage-blue?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij4KPHBhdGggZD0iTTAgMCBDMTUuODQgMCAzMS42OCAwIDQ4IDAgQzQ4IDE1Ljg0IDQ4IDMxLjY4IDQ4IDQ4IEMzMi4xNiA0OCAxNi4zMiA0OCAwIDQ4IEMwIDMyLjE2IDAgMTYuMzIgMCAwIFogIiBmaWxsPSIjMTMxMDEwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDApIi8+CjxwYXRoIGQ9Ik0wIDAgQzcuOTIgMCAxNS44NCAwIDI0IDAgQzI0IDkuOSAyNCAxOS44IDI0IDMwIEMxNi4wOCAzMCA4LjE2IDMwIDAgMzAgQzAgMjAuMSAwIDEwLjIgMCAwIFogIiBmaWxsPSIjRkZGRkZGIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMiw5KSIvPgo8cGF0aCBkPSJNMCAwIEMzLjk2IDAgNy45MiAwIDEyIDAgQzEyIDUuOTQgMTIgMTEuODggMTIgMTggQzguMDQgMTggNC4wOCAxOCAwIDE4IEMwIDEyLjA2IDAgNi4xMiAwIDAgWiAiIGZpbGw9IiM1QTU4NTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE4LDE1KSIvPgo8cGF0aCBkPSJNMCAwIEMzLjk2IDAgNy45MiAwIDEyIDAgQzEyIDEuOTggMTIgMy45NiAxMiA2IEM4LjA0IDYgNC4wOCA2IDAgNiBDMCA0LjAyIDAgMi4wNCAwIDAgWiAiIGZpbGw9IiMxMzEwMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE4LDE1KSIvPgo8L3N2Zz4K&logoColor=white)](https://github.com/Nixer-2301/OpenClaw-Manager)
 ## 技术栈
 
 | 层 | 技术 |
